@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CRM Ventas</title>
+    <link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+    <div class="header">
+        <div class="navbar">
+            <div class="logo">
+                <div class="logo-icon">◆</div>
+                CRM
+            </div>
+            <div class="nav-items">
+                <a href="#" class="nav-item">Ventas</a>
+                <a href="#" class="nav-item">Actividades</a>
+                <a href="#" class="nav-item">Historial</a>
+            </div>
+            <div class="header-right">
+                <div class="user-avatar">UMG</div>
+                <span style="font-size: 12px; color: #6c757d;">UMG VENTAS</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="toolbar">
+        <button class="btn btn-primary" onclick="openModal('nuevo')">+ Nuevo</button>
+        <button class="btn btn-secondary">Generar leads</button>
+        <button class="btn btn-secondary">Flujo ⚡</button>
+        
+        <div class="search-container">
+            <span>🔍</span>
+            <input type="text" class="search-input" placeholder="Buscar...">
+        </div>
+        
+        <div class="view-controls">
+            <div class="view-btn active">☰</div>
+            <div class="view-btn">▢</div>
+            <div class="view-btn">📊</div>
+            <div class="view-btn">📋</div>
+            <div class="view-btn">📈</div>
+            <div class="view-btn">❓</div>
+            <div class="view-btn">⚙️</div>
+        </div>
+    </div>
+
+    <div class="kanban-container">
+        <div class="kanban-board">
+            <div class="kanban-column" data-stage="nuevo">
+                <div class="column-header">
+                    <div class="column-title">
+                        Nuevo
+                        <div class="column-total">0 Q</div>
+                    </div>
+                    <button class="add-card-btn" onclick="openModal('nuevo')">+</button>
+                </div>
+                <div class="cards-container"></div>
+            </div>
+
+            <div class="kanban-column" data-stage="calificado">
+                <div class="column-header">
+                    <div class="column-title">
+                        Calificado
+                        <div class="column-total">0 Q</div>
+                    </div>
+                    <button class="add-card-btn" onclick="openModal('calificado')">+</button>
+                </div>
+                <div class="cards-container"></div>
+            </div>
+
+            <div class="kanban-column" data-stage="propuesta">
+                <div class="column-header">
+                    <div class="column-title">
+                        Propuesta
+                        <div class="column-total">0 Q</div>
+                    </div>
+                    <button class="add-card-btn" onclick="openModal('propuesta')">+</button>
+                </div>
+                <div class="cards-container"></div>
+            </div>
+
+            <div class="kanban-column" data-stage="ganado">
+                <div class="column-header">
+                    <div class="column-title">
+                        Ganado
+                        <div class="column-total">0 Q</div>
+                    </div>
+                    <button class="add-card-btn" onclick="openModal('ganado')">+</button>
+                </div>
+                <div class="cards-container"></div>
+            </div>
+
+            <div class="kanban-column" data-stage="perdido">
+                <div class="column-header">
+                    <div class="column-title">
+                        Perdido
+                        <div class="column-total">0 Q</div>
+                    </div>
+                    <button class="add-card-btn" onclick="openModal('perdido')">+</button>
+                </div>
+                <div class="cards-container"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="opportunityModal">
+        <div class="modal">
+            <div class="modal-header">
+                <div class="modal-stage-tag" id="modalStageTag">Nuevo</div>
+                <div class="modal-title" id="modalTitle">Nueva Oportunidad</div>
+                <div class="modal-total" id="modalTotal">0 Q</div>
+                <button class="modal-add-btn" onclick="closeModal()">×</button>
+            </div>
+            <div class="modal-body">
+                <form id="opportunityForm">
+                    <div class="form-group">
+                        <div class="form-field">
+                            <div class="form-icon">🏢</div>
+                            <select class="form-select" id="companySelect" required>
+                                <option value="" disabled selected>Seleccione empresa</option>
+                                <option value="Hardware Express">Hardware Express</option>
+                                <option value="Junicon">Junicon</option>
+                                <option value="MC donald's">MC donald's</option>
+                                <option value="ABC Electronics">ABC Electronics</option>
+                                <option value="other">Otra empresa</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group" id="customCompanyGroup" style="display: none;">
+                        <div class="form-field">
+                            <div class="form-icon">🏢</div>
+                            <input type="text" class="form-input" id="customCompanyInput" placeholder="Nombre de la empresa">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="form-field">
+                            <div class="form-icon">📋</div>
+                            <input type="text" class="form-input" id="opportunityNameInput" placeholder="Nombre de la oportunidad" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="form-field">
+                            <div class="form-icon">💰</div>
+                            <div class="amount-field">
+                                <input type="number" class="form-input" id="amountInput" placeholder="0.00" step="0.01" min="0" required>
+                                <span class="currency-symbol">Q</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="form-field">
+                            <div class="form-icon">📅</div>
+                            <input type="date" class="form-input" id="closeDateInput" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="form-field">
+                            <div class="form-icon">👤</div>
+                            <input type="text" class="form-input" id="contactInput" placeholder="Nombre del contacto" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="form-field">
+                            <div class="form-icon">📞</div>
+                            <input type="tel" class="form-input" id="phoneInput" placeholder="Teléfono del contacto">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="form-field">
+                            <div class="form-icon">✉️</div>
+                            <input type="email" class="form-input" id="emailInput" placeholder="Correo electrónico">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="form-field">
+                            <div class="form-icon">🔍</div>
+                            <select class="form-select" id="sourceSelect">
+                                <option value="" disabled selected>Origen de la oportunidad</option>
+                                <option value="web">Sitio web</option>
+                                <option value="referral">Referencia</option>
+                                <option value="social">Redes sociales</option>
+                                <option value="event">Evento</option>
+                                <option value="other">Otro</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="form-field">
+                            <div class="form-icon">📝</div>
+                            <textarea class="form-input" id="notesInput" placeholder="Notas adicionales" style="resize: vertical; min-height: 60px;"></textarea>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+            <div class="modal-footer">
+                <div class="btn-group">
+                    <button type="button" class="btn-add" id="saveButton" onclick="saveOpportunity()">Agregar</button>
+                    <button type="button" class="btn-edit" id="cancelButton" onclick="closeModal()">Cancelar</button>
+                </div>
+                <button type="button" class="btn-delete" id="deleteButton" style="display: none;" onclick="deleteOpportunity()">🗑️ Eliminar</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="aplicacion.js"></script>
+</body>
+</html>
